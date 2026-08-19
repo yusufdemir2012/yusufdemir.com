@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yusufdemir.com</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      color: #172033;
+      background: #f3f6fb;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 620px;
+      padding: 52px 36px;
+      text-align: center;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(24, 39, 75, 0.12);
+    }
+
+    .languages {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .languages button {
+      border: 0;
+      padding: 8px 13px;
+      border-radius: 8px;
+      background: #edf1f7;
+      color: #657086;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .languages button.active {
+      background: #172033;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 8vw, 54px);
+      letter-spacing: -2px;
+    }
+
+    p {
+      margin: 0 auto 30px;
+      max-width: 460px;
+      color: #687386;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    a {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 10px;
+      background: #172033;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .email {
+      display: block;
+      margin-top: 18px;
+      color: #687386;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="languages">
+      <button id="trButton" onclick="setLanguage('tr')">TR</button>
+      <button id="enButton" onclick="setLanguage('en')">EN</button>
+    </div>
+
+    <h1>yusufdemir.com</h1>
+    <p id="message"></p>
+
+    <a id="contactButton" href="mailto:owner@yusufdemir.com"></a>
+    <span class="email">owner@yusufdemir.com</span>
+  </main>
+
+  <script>
+    const texts = {
+      tr: {
+        message: "Bu alan adı satılıktır. Satın alma ve fiyat bilgisi için bizimle iletişime geçin.",
+        button: "İletişime geç",
+        subject: "yusufdemir.com alan adı hakkında"
+      },
+      en: {
+        message: "This domain is for sale. Contact us for pricing and acquisition details.",
+        button: "Contact",
+        subject: "Regarding the yusufdemir.com domain"
+      }
+    };
+
+    function setLanguage(language) {
+      const text = texts[language];
+
+      document.documentElement.lang = language;
+      document.getElementById("message").textContent = text.message;
+      document.getElementById("contactButton").textContent = text.button;
+      document.getElementById("contactButton").href =
+        "mailto:owner@yusufdemir.com?subject=" + encodeURIComponent(text.subject);
+
+      document.getElementById("trButton").classList.toggle("active", language === "tr");
+      document.getElementById("enButton").classList.toggle("active", language === "en");
+
+      localStorage.setItem("language", language);
+    }
+
+    const savedLanguage = localStorage.getItem("language");
+    const browserLanguage = navigator.language.toLowerCase().startsWith("tr") ? "tr" : "en";
+
+    setLanguage(savedLanguage || browserLanguage);
+  </script>
+</body>
+</html>
